@@ -1,3 +1,6 @@
+'''
+    In pos tagging, used the percentage of matched words rather than a boolean value.
+'''
 import pandas as pd
 import numpy as np
 import re, math
