@@ -3,6 +3,7 @@ import numpy as np
 import re, math
 from collections import Counter
 import nltk
+from sklearn.metrics import f1_score
 from nltk.corpus import stopwords
 from nltk.stem import SnowballStemmer
 from string import punctuation
@@ -193,13 +194,9 @@ def same_pos(question1, question2, tag):
 		return 1
 	if len(pos1)==0 or len(pos2)==0:
 		return 0
-	for pos in pos1:
-		if pos in pos2:
-			return 1
-		if pos in dict.keys():
-			if dict[pos] in pos2:
-				return 1
-	return 0
+	num = set(pos1).intersection(set(pos2).union(set([dict[x] for x in set(dict.keys()).intersection(set(pos2))])))
+	den = set(pos1).union(set(pos2))
+	return len(num)/len(den)
 
 #--------------TRAINING ON FULL TRAIN SET--------------#
 same_noun=[]
